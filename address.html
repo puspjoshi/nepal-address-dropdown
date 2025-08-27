@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs"></script>
+    <title>Nepal Address Dropdown</title>
+</head>
+<body class="bg-blue-900">
+
+    <div class="flex flex-col justify-center items-center h-screen gap-4">
+        <div class="bg-white p-10 shadow-2xl rounded-lg w-1/4" x-data="dependentDropdown" x-init="fetchProvinces()">
+            <h2 class="text-2xl text-gray-800 font-bold mb-4">Select Address</h2>
+            <!-- Province Dropdown -->
+            <div class="mb-4">
+                <label for="category" class="text-2xl block text-gray-800 font-medium">Province / Region</label>
+                <select id="category" name="category" x-model="seletedProvince" @change="updateCities" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring focus:ring-blue-200">
+                    <option value="" disabled selected>Please choose your province / Region</option>
+                    <template x-for="province in provinces">
+                        <option :value="province.id" x-text="province.name"></option>
+
+                    </template>
+                </select> 
+            </div>
+            <!-- City dropdown -->
+             <div class="mb-4">
+                <label for="subcategory" class="text-2xl block text-gray-800 font-medium">City</label>
+                <select id="subcategory" name="subcategory" :disabled="!cities.length" x-model="selectedCities" @change="UpdateZones" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring focus:ring-blue-200">
+                    <option value="" disabled selected>Please choose your city</option>
+                    <template x-for="city in cities">
+                        <option :value="city.id" x-text="city.name"></option>
+
+                    </template>
+                </select> 
+            </div>
+            <!-- Zones -->
+             <div class="mb-4">
+                <label for="zones" class="text-2xl block text-gray-800 font-medium">Zone</label>
+                <select id="zones" name="zones" :disabled="!zones.length" x-mode l="selectedZones" @change="UpdateZones" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring focus:ring-blue-200">
+                    <option value="" disabled selected>Please choose your Zones</option>
+                    <template x-for="zone in zones">
+                        <option :value="zone.id" x-text="zone.name"></option>
+
+                    </template>
+                </select> 
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('alpine:init',() => {
+            Alpine.data('dependentDropdown',() => ({
+                seletedProvince: '',
+                selectedCities: '',
+                selectedZones: '',
+                provinces: [],
+                cities: [],
+                zones: [],
+                async fetchProvinces() {
+                    try {
+                        let res = await fetch('includes/address.php?type=provinces');
+                        this.provinces = await res.json();
+                    } catch (e) {
+                        console.error("Failed to load provinces", e);
+                    }
+                },
+                async updateCities() {
+                    try {
+                        let res = await fetch(`includes/address.php?type=cities&province_id=${this.seletedProvince}`);
+                        this.cities = await res.json();
+                    } catch (e) {
+                        console.error("Failed to load cities", e);
+                    }
+                    const selectedProvicenName = this.provinces.find(c => c.id == this.seletedProvince)?.name || 'None';
+                    console.log("selected Province = "+selectedProvicenName);
+                    this.selectedCities = '';
+                },
+                async UpdateZones(){
+                    try {
+                        let res = await fetch(`includes/address.php?type=zones&city_id=${this.selectedCities}`);
+                        this.zones = await res.json();
+                    } catch (e) {
+                        console.error("Failed to load cities", e);
+                    }
+                    const selectedCitiesName = this.cities.find(c => c.id == this.selectedCities)?.name || 'None';
+                    console.log("selected City = "+selectedCitiesName);
+                    this.selectedZones = '';
+                }
+                
+            }))
+        })
+    </script>
+</body>
+</html>
