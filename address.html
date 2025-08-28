@@ -7,7 +7,7 @@
     <script defer src="https://unpkg.com/alpinejs"></script>
     <title>Nepal Address Dropdown</title>
 </head>
-<body class="bg-blue-900">
+<body class="bg-blue-900" x-transition>
 
     <div class="flex flex-col justify-center items-center h-screen gap-4">
         <div class="bg-white p-10 shadow-2xl rounded-lg w-1/4" x-data="dependentDropdown" x-init="fetchProvinces()">
@@ -57,6 +57,7 @@
                 cities: [],
                 zones: [],
                 async fetchProvinces() {
+                    this.cities = [];
                     try {
                         let res = await fetch('includes/address.php?type=provinces');
                         this.provinces = await res.json();
@@ -73,14 +74,9 @@
                     } catch (e) {
                         console.error("Failed to load cities", e);
                     }
-                    // const selectedProvicenName = this.provinces.find(c => c.id == this.seletedProvince)?.name || 'None';
-                    // console.log("selected Province = "+selectedProvicenName);
-                    this.selectedCities = '';
-                    this.selectedZones = '';
                     
                 },
                 async UpdateZones(){
-                    this.zones = [];
                     try {
                         let res = await fetch(`includes/address.php?type=zones&city_id=${this.selectedCities}`);
                         this.zones = await res.json();
@@ -89,7 +85,7 @@
                     }
                     const selectedCitiesName = this.cities.find(c => c.id == this.selectedCities)?.name || 'None';
                     console.log("selected City = "+selectedCitiesName);
-                    this.selectedZones = '';
+                    // this.selectedZones = '';
                 }
                 
             }))
