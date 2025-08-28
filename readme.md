@@ -3,7 +3,7 @@
 A **complete Nepal address database** with Provinces, Cities, and Zones/Areas.  
 Built for **eCommerce systems, logistics apps, and service platforms** with **Daraz-like cascading dropdowns** for address selection.
 
-please add if any address misses and push your commit in new branch.
+Please ensure that any missing addresses are added, and then push your commit to a new branch.
 
 ---
 
