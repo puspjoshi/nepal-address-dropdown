@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Aug 27, 2025 at 05:37 PM
+-- Generation Time: Aug 28, 2025 at 03:50 AM
 -- Server version: 8.0.43-0ubuntu0.24.04.1
 -- PHP Version: 8.4.10
 
@@ -1578,7 +1578,8 @@ INSERT INTO `zones` (`id`, `city_id`, `name`, `created_at`, `deleted_at`) VALUES
 -- Indexes for table `cities`
 --
 ALTER TABLE `cities`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `province_id` (`province_id`);
 
 --
 -- Indexes for table `provinces`
@@ -1590,7 +1591,8 @@ ALTER TABLE `provinces`
 -- Indexes for table `zones`
 --
 ALTER TABLE `zones`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `city_id` (`city_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -1613,6 +1615,22 @@ ALTER TABLE `provinces`
 --
 ALTER TABLE `zones`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1332;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `cities`
+--
+ALTER TABLE `cities`
+  ADD CONSTRAINT `cities_ibfk_1` FOREIGN KEY (`province_id`) REFERENCES `provinces` (`id`);
+
+--
+-- Constraints for table `zones`
+--
+ALTER TABLE `zones`
+  ADD CONSTRAINT `zones_ibfk_1` FOREIGN KEY (`city_id`) REFERENCES `cities` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
