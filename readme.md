@@ -1,7 +1,7 @@
 # 🇳🇵 Nepal Address Database
 
 A **complete Nepal address database** with Provinces, Cities, and Zones/Areas.  
-Built for **eCommerce systems, logistics apps, and service platforms** with **Daraz-like cascading dropdowns** for address selection.
+Built for **eCommerce systems, logistics apps, and service platforms** with **Daraz-like cascading dropdowns** for address selection using **AlpineJs & Tailwind CSS**.
 
 Please ensure that any missing addresses are added, and then push your commit to a new branch.
 
@@ -13,6 +13,7 @@ Please ensure that any missing addresses are added, and then push your commit to
 - Includes **all 7 Provinces**
 - Major **Cities/Municipalities**
 - Detailed **Zones/Wards/Areas** across Nepal
+- using **AlpineJs & Tailwind CSS**
 
 ### ✅ eCommerce Ready
 - Designed for **Daraz-like cascading dropdowns** (Province → City → Zone)
