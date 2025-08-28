@@ -65,18 +65,22 @@
                     }
                 },
                 async updateCities() {
+                    this.zones = [];
+                    
                     try {
                         let res = await fetch(`includes/address.php?type=cities&province_id=${this.seletedProvince}`);
                         this.cities = await res.json();
                     } catch (e) {
                         console.error("Failed to load cities", e);
                     }
-                    const selectedProvicenName = this.provinces.find(c => c.id == this.seletedProvince)?.name || 'None';
-                    console.log("selected Province = "+selectedProvicenName);
+                    // const selectedProvicenName = this.provinces.find(c => c.id == this.seletedProvince)?.name || 'None';
+                    // console.log("selected Province = "+selectedProvicenName);
                     this.selectedCities = '';
                     this.selectedZones = '';
+                    
                 },
                 async UpdateZones(){
+                    this.zones = [];
                     try {
                         let res = await fetch(`includes/address.php?type=zones&city_id=${this.selectedCities}`);
                         this.zones = await res.json();
